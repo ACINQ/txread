@@ -1,0 +1,7 @@
+[package]
+name = "txread"
+version = "0.0.1"
+authors = ["pm47 <pm@acinq.fr>"]
+
+[dependencies]
+rustc-serialize = "0.3"
