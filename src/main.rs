@@ -14,41 +14,41 @@ fn main() {
 
 fn parse(tx: Vec<u8>) {
     let mut i: usize = 0;
-    println!("version: {:?}", &tx[i..i+4].to_hex()); i+=4;
+    println!("version: {}", &tx[i..i+4].to_hex()); i+=4;
     println!("");
     assert!(tx[i] < 0xFD, "cannot parse tx with more than 253 inputs");
     let nb_inputs = tx[i]; i+=1;
     for j in 0..nb_inputs {
-        println!("input #{:?}", j);
-        println!("    hash: {:?}", &tx[i..i+32].to_hex()); i+=32;
-        println!("    index: {:?}", &tx[i..i+4].to_hex()); i+=4;
+        println!("input #{}", j);
+        println!("    hash: {}", &tx[i..i+32].to_hex()); i+=32;
+        println!("    index: {}", &tx[i..i+4].to_hex()); i+=4;
         assert!(tx[i] <= 0xFD, "cannot parse tx scripts encoded on more than 2 bytes");
         let script_size: usize =   if tx[i] < 0xFD {
                                 let s = tx[i] as usize; i+=1; s
                             } else {
                                 let s = tx[i] as usize * 256 + tx[i+1] as usize; i+=2; s
                             };
-        println!("    script size: {:?} B", script_size);
-        println!("    script: {:?}", &tx[i..i+script_size].to_hex()); i+=script_size;
-        println!("    sequence: {:?}", &tx[i..i+4].to_hex()); i+=4;
+        println!("    script size: {} B", script_size);
+        println!("    script: {}", &tx[i..i+script_size].to_hex()); i+=script_size;
+        println!("    sequence: {}", &tx[i..i+4].to_hex()); i+=4;
     }
     println!("");
     assert!(tx[i] < 0xFD, "cannot parse tx with more than 253 outputs");
     let nb_outputs = tx[i]; i+=1;
     for j in 0..nb_outputs {
-        println!("output #{:?}", j);
-        println!("    amount: {:?}", &tx[i..i+8].to_hex()); i+=8;
+        println!("output #{}", j);
+        println!("    amount: {}", &tx[i..i+8].to_hex()); i+=8;
         assert!(tx[i] <= 0xFD, "cannot parse tx scripts encoded on more than 2 bytes");
         let script_size: usize =   if tx[i] < 0xFD {
                                 let s = tx[i] as usize; i+=1; s
                             } else {
                                 let s = tx[i] as usize * 256 + tx[i+1] as usize; i+=2; s
                             };
-        println!("    script size: {:?} B", script_size);
-        println!("    script: {:?}", &tx[i..i+script_size].to_hex()); i+=script_size;
+        println!("    script size: {} B", script_size);
+        println!("    script: {}", &tx[i..i+script_size].to_hex()); i+=script_size;
     }
     println!("");
-    println!("locktime: {:?}", &tx[i..i+4].to_hex()); i+=4;
+    println!("locktime: {}", &tx[i..i+4].to_hex()); i+=4;
     assert!(i == tx.len(), "unread data at the end of the input");
 }
 
